@@ -1,6 +1,5 @@
 ﻿namespace OpenTl.Common.Auth.Server
 {
-    using System.Collections;
     using System.Linq;
 
     using BarsGroup.CodeGuard;
@@ -16,8 +15,6 @@
     using Org.BouncyCastle.Math;
     using Org.BouncyCastle.Security;
     
-    using MoreLinq;
-
     using OpenTl.Common.GuardExtensions;
 
     public static class Step3ServerHelper
@@ -47,15 +44,18 @@
 
         private static TDhGenOk SerializeResponse(RequestSetClientDHParams setClientDhParams, byte[] newNonce, BigInteger agreement)
         {
-            var newNonceHash = Sha1Helper.ComputeHashsum(newNonce).Skip(4).ToArray();
+            var newNonceHash = Sha1Helper.ComputeHashsum(newNonce).Skip(4).ToList();
             
             var authKeyAuxHash = Sha1Helper.ComputeHashsum(agreement.ToByteArrayUnsigned()).Take(8).ToArray();
 
+            newNonceHash.Add(1);
+            newNonceHash.AddRange(authKeyAuxHash);
+            
             return new TDhGenOk
                    {
                        Nonce = setClientDhParams.Nonce,
                        ServerNonce = setClientDhParams.ServerNonce,
-                       NewNonceHash1 = newNonceHash.Concat((byte)1).Concat(authKeyAuxHash).ToArray()
+                       NewNonceHash1 = newNonceHash.ToArray()
                    };
         }
         
