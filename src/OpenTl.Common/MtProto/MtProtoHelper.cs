@@ -102,13 +102,10 @@ namespace OpenTl.Common.MtProto
                                            out long messageId,
                                            out int seqNumber)
         {
-            
             authKeyId = packet.ReadLongLE();
             var messageKey = packet.ToArray(16);
-            var encryptedData = packet.ToArray();
+            var encryptedData = packet.ToArray(packet.ReadableBytes);
 
-            packet.SafeRelease();
-            
             var aesKey = CalcKey(session.AuthKey.Data, messageKey, toServer);
 
             var message = AES.DecryptAes(aesKey, encryptedData);
