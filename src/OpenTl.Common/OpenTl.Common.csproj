@@ -14,8 +14,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BarsGroup.CodeGuard" Version="3.2.43" />
-    <PackageReference Include="Castle.Windsor" Version="4.1.0" />
-    <PackageReference Include="DotNetty.Buffers" Version="0.5.0" />
+    <PackageReference Include="Castle.Windsor" Version="4.1.1" />
+    <PackageReference Include="DotNetty.Buffers" Version="0.6.0" />
     <PackageReference Include="OpenTl.BouncyCastle" Version="1.8.3" />
     <PackageReference Include="OpenTl.Schema" Version="1.86.68" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
